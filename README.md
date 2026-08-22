@@ -1,8 +1,8 @@
-# Testing Minimum Length Constraints and their Impact on the CMB
+# Testing Minimum Length Constraints and Their Impact on the CMB
 
-Research Question: What is the largest minimum length value that leaves a significant impact (specified later) on the CMB and its power spectra when compared with standard cosmological models?
+## Research Question: What is the largest minimum length value that leaves a significant impact (specified later) on the CMB and its power spectra when compared with standard cosmological models?
 
-Current pipeline:
+## Current pipeline:
 1. Blur the data using the average of the points within a certain radius (which represents the minimum length) in powerbox.
   * The power spectrum fed into powerbox should be the regular primordial power spectrum, with no minimum length constraint.
   * Blurring of data is probably done using a unique script?
