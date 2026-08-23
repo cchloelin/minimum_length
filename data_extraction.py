@@ -1,30 +1,29 @@
-from classy import Class
 import powerbox as pbox
 from powerbox import get_power
 import matplotlib.pyplot as plt
 import numpy as np
 
-LambdaCDM = Class()
-LambdaCDM.set_baseline('p18lb')
-LambdaCDM.compute()
+def dimensionless_primordial(k, As=2.123257e-09, ns=9.686025e-01, k_pivot=0.05):
+    return As * (k/k_pivot) ** (ns-1)
 
-primordial_dictionary = LambdaCDM.get_primordial()
-wavenumber = np.array(primordial_dictionary['k [1/Mpc]'])
-values = np.array(primordial_dictionary['P_scalar(k)'])
+def dimensionful_primordial(k):
+    return (2*np.pi**2)/k**3 * dimensionless_primordial(k)
 
-def primordial_callable(array):
-    return np.interp(array.flatten(), wavenumber.flatten(), values.flatten())
-
-# what are the units for the real-space realization if the primordial power spectrum is dimensionless??
-b_length = 100.0
+b_length = 1000.0
 
 pb = pbox.PowerBox(
-    N=512,                     
-    dim=2,                     
-    pk = primordial_callable,
+    N=256,                     
+    dim=3,                     
+    pk = dimensionful_primordial,
     boxlength = b_length,           
 )
 
-plt.imshow(pb.delta_x(),extent=(0,b_length, 0, b_length))
+realization = pb.delta_x()
+
+values, wavenumber, *extra = get_power(realization, pb.boxlength)
+print(wavenumber, values)
+
+realization_slice = realization[0, :, :]
+plt.imshow(realization_slice, extent=(0,b_length,0,b_length))
 plt.colorbar()
 plt.show()
