@@ -18,12 +18,10 @@ pb = pbox.PowerBox(
     boxlength = b_length,           
 )
 
-realization = pb.delta_x()
+overdensities, coordinates = pb.delta_x(), pb.x
+print(overdensities, coordinates)
 
-values, wavenumber, *extra = get_power(realization, pb.boxlength)
-print(wavenumber, values)
-
-realization_slice = realization[0, :, :]
-plt.imshow(realization_slice, extent=(0,b_length,0,b_length))
-plt.colorbar()
-plt.show()
+realization_slice = overdensities[0, :, :]
+#plt.imshow(realization_slice, extent=(0,b_length,0,b_length))
+#plt.colorbar()
+#plt.show()
