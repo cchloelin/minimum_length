@@ -1,8 +1,7 @@
 import powerbox as pbox
-from powerbox import get_power
-import matplotlib.pyplot as plt
 import numpy as np
 
+"""Generate a realization of the primordial power spectrum"""
 def dimensionless_primordial(k, As=2.123257e-09, ns=9.686025e-01, k_pivot=0.05):
     return As * (k/k_pivot) ** (ns-1)
 
@@ -15,13 +14,18 @@ pb = pbox.PowerBox(
     N=256,                     
     dim=3,                     
     pk = dimensionful_primordial,
-    boxlength = b_length,           
+    boxlength = b_length,
+    seed=1010           
 )
 
-overdensities, coordinates = pb.delta_x(), pb.x
-print(overdensities, coordinates)
+"""Extract real-space values"""
+# Random-variable values
+random_values = pb.delta_x()
 
-realization_slice = overdensities[0, :, :]
-#plt.imshow(realization_slice, extent=(0,b_length,0,b_length))
-#plt.colorbar()
-#plt.show()
+# Coordinates
+x_coords, y_coords, z_coords = np.meshgrid(pb.x, pb.x, pb.x, indexing='ij')
+
+# X, Y, Z coordinates and corresponding random variable.
+points_values = np.column_stack((x_coords.ravel(), y_coords.ravel(), z_coords.ravel(), random_values.ravel()))
+
+print(points_values)
