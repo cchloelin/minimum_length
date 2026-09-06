@@ -11,7 +11,7 @@ def dimensionful_primordial(k):
 b_length = 1000.0
 
 pb = pbox.PowerBox(
-    N=256,                     
+    N=256, # per dimension                     
     dim=3,                     
     pk = dimensionful_primordial,
     boxlength = b_length,
