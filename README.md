@@ -10,8 +10,10 @@
   * pb.delta_x() --> extracts real space random variable values from each point.
   * pb.x --> extracts spatial coordinates along a speciifc axis in the realization. Because the box is a square (or cube), all points can be found through combinations of the values returned.
   * Four columns: x, y, z, random variable value.
-3. Feed the data into the external_Pk module in CLASS to get the desired primordial power spectrum.
-4. Configure the CLASS code parameters to use the primordial power spectrum with the minimum length constraints, then run the CMB realization codes and generate required graphs.
-5. Data analysis using statistical analysis with MontePython or COBAYA
+3. Run the blurring scripts on the extracted data to get new random variable values with a minimum length implemented.
+4. Extract a power spectrum equation from the configured data.
+  * Use a FFT on the configured real-space data, then find a line of best fit for the actual power spectrum equation (?)
+5. Feed the equation into the external_Pk module in CLASS, and get CMB data from such.
+6. Data analysis using statistical analysis with COBAYA.
   * Should extract the largest minimum length constraint which leaves a significant change to the CMB. So, an upper bound for a possible minimum length in the CMB today (?)
-  * Leaning towards COBAYA
+  * Can directly call CLASS in COBAYA.
