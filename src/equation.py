@@ -17,7 +17,7 @@ shaped_values = np.asarray(random_values).reshape(n, n, n)
 """Perform the Fourier transform."""
 fourier_space = fft(shaped_values, b_length, ret_cubegrid=False)
 
-# Returns 4 arrays:
+# Returns 4 arrays respectively:
 ## Fourier space values -> j means imaginary
 ## x coordinates
 ## y coordinates
