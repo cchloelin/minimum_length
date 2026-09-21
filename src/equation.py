@@ -1,25 +1,33 @@
 import numpy as np
 from blurring_script import blurring
-from powerbox.dft import fft
+from powerbox import get_power
+from scipy.interpolate import CubicSpline
 
 n = 10
-b_length = 1000.0
+b_length = 200.0
 data = blurring()
-random_values = []
 
 """Extract only the random variable values from the real-space data."""
-for point in data:
-    random_values.append(point[-1])
-
-# Specify that the field is 3D by shaping it accordingly; N is the N used when first generating a powerbox instance.
+random_values = [point[-1] for point in data]
 shaped_values = np.asarray(random_values).reshape(n, n, n)
 
-"""Perform the Fourier transform."""
-fourier_space = fft(shaped_values, b_length, ret_cubegrid=False)
+"""Get the power spectrum data using the get_power function in powerbox."""
+# n-modes describes the number of points in each bin.
+dimensionful_values, k_values, _, n_modes = get_power(
+    shaped_values, 
+    b_length, 
+    a=1, b=1,
+    dimensionless=False,
+    log_bins=True,
+    )
 
-# Returns 4 arrays respectively:
-## Fourier space values -> j means imaginary
-## x coordinates
-## y coordinates
-## z coordinates
-print(fourier_space)
+"""Derive the power spectrum equation using cubic spline interpolation."""
+# Convert the dimensionful values into the dimensionless power spectrum format.
+primordial_values = (k_values**3 / (2 * np.pi**2)) * dimensionful_values
+
+# Fit the values to log-log space as convention
+log_k = np.log(k_values)
+log_p = np.log(primordial_values)
+
+# Use cubic spline interpolation to get the primordial power spectrum equation.
+primordial_equation = CubicSpline(log_k, log_p)

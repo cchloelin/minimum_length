@@ -9,7 +9,7 @@ def dimensionful_primordial(k):
     return (2*np.pi**2)/k**3 * dimensionless_primordial(k)
 
 def primordial_realization():
-    b_length = 1000.0
+    b_length = 200.0 # in MPC
 
     pb = pbox.PowerBox(
         N=10, # per dimension                     
