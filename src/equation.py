@@ -1,5 +1,6 @@
 import numpy as np
 from blurring_script import blurring
+from gaussian_blurring import blurred_data
 from powerbox import get_power
 from scipy.interpolate import CubicSpline
 

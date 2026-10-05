@@ -3,7 +3,7 @@ import statistics
 from data_extraction import primordial_realization
 # ^ temporary, will be replaced with arbitrary power spectrum data later
 
-blurring_radius = 150
+blurring_radius = 120
 data = primordial_realization().tolist()
 nearby_points = {}
 
@@ -30,3 +30,5 @@ def blurring():
 
     # maybe edit to only return the last value
     return data
+
+#print(blurring())
