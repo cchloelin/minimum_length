@@ -12,7 +12,7 @@ def primordial_realization():
     b_length = 200.0 # in MPC
 
     pb = pbox.PowerBox(
-        N=10, # per dimension                     
+        N=256, # per dimension                     
         dim=3,                     
         pk = dimensionful_primordial,
         boxlength = b_length,
