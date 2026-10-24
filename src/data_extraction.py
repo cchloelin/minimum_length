@@ -1,20 +1,17 @@
 import powerbox as pbox
 import numpy as np
 
-"""Generate a realization of the primordial power spectrum"""
-def dimensionless_primordial(k, As=2.123257e-09, ns=9.686025e-01, k_pivot=0.05):
-    return As * (k/k_pivot) ** (ns-1)
+"""Generate the initial conditions for inflation using the Bunch-Davies Spectrum."""
+def bunch_davies(k):
+    return np.where(k > 0, 1.0 / (2.0 * k), 0.0)
 
-def dimensionful_primordial(k):
-    return (2*np.pi**2)/k**3 * dimensionless_primordial(k)
-
-def primordial_realization():
+def initial_conditions():
     b_length = 200.0 # in MPC
 
     pb = pbox.PowerBox(
         N=256, # per dimension                     
         dim=3,                     
-        pk = dimensionful_primordial,
+        pk = bunch_davies,
         boxlength = b_length,
         seed=1010           
     )
@@ -37,4 +34,5 @@ def primordial_realization():
     # points_values is in the form of a numpy array, which is not the same as a nested python list.
     return points_values
 
-print(primordial_realization())
+#print(initial_conditions())
+## Values are too big currently, either scale down by 1e-5 or change units to be Hubble parameter (so smaller than 1)
