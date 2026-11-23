@@ -1,19 +1,14 @@
-# Testing Minimum Length Constraints and Their Impact on the CMB
-
-## Research Question: What is the largest minimum length value that leaves a significant impact (specified later) on the CMB and its power spectra when compared with standard cosmological models? (?)
-
-## Current pipeline:
-1. Blur the data using the average of the points within a certain radius (which represents the minimum length) in powerbox.
-  * Powerbox is fed an arbitrary power spectrum to generate a specific realization, which is then evolved with the minimum length constraint using a unique script.
-  * Real-space data is extracted once inflation ends.
-2. Extract this data from powerbox and place it in a table in a separate file.
-  * pb.delta_x() --> extracts real space random variable values from each point.
-  * pb.x --> extracts spatial coordinates along a speciifc axis in the realization. Because the box is a square (or cube), all points can be found through combinations of the values returned.
-  * Four columns: x, y, z, random variable value.
-3. Run the blurring scripts on the extracted data to get new random variable values with a minimum length implemented.
-4. Extract a power spectrum equation from the configured data.
-  * Use a FFT on the configured real-space data, then find a line of best fit for the actual power spectrum equation (?)
-5. Feed the equation into the external_Pk module in CLASS, and get CMB data from such.
-6. Data analysis using statistical analysis with COBAYA.
-  * Should extract the largest minimum length constraint which leaves a significant change to the CMB. So, an upper bound for a possible minimum length in the CMB today (?)
-  * Can directly call CLASS in COBAYA.
+# Defining Minimum Length Scale Thresholds Using Theoretical Simulations
+Research Question: What is a threshold for minimum length scales that provide a comparable framework with standard cosmological models? (?)
+## Motivations
+Whether or not the universe is discrete or continuous has been debated since ancient times. In the modern era, the two primary frameworks used to describe the universe, general relativity and quantum mechanics, fail to provide a solution in extreme environments. Under these conditions, the math begins to result in nonsensical infinities which cannot yield any physical predictions. The Planck Length (1.6 * 10^-35 m) is the current "minimum length" in which any attempts at measurement or calculation begin to break down. However, whether or not this length describes an actual discrete universe or if there is just a fundamental gap in our understanding of the universe is still unknown.
+## Methodology
+1. _Establish the initial conditions of the inflaton field_ -- We used the Bunch-Davies spectrum in the program powerbox, which generates a Gaussian Random Field based on a given equation. Since the Bunch-Davies spectrum inherently describes the quantum fluctuations experienced by the inflaton field, which are inherently Gaussian, this process works out.
+3. _Implement a minimum length scale_ -- Minimum lengths can be interpreted as limits on spatial and temporal resolution, making them implementable through blurring. Gaussian blurring was thus used because of how it handles edges and provides a more realistic result compared to other methods of blurring, such as box filters.
+4. _Evolve initial conditions through inflation_ -- W.I.P
+5. _Extract data_ -- Powerbox provides a get_power function that can be used to extract the primordial power spectrum values from the real-space simulation with the minimum-length implementation.
+6. _Evolve to the modern era_ -- In order to compare real-world data from the modern era to our simulated data, our data must be evolved to the modern era, which can be done with CLASS by simply feeding it properly formatted primordial power spectrum values that were just extracted.
+## Data Analysis
+COBAYA was used for data analysis due to its compatibility with CLASS and its relevance for what this project is testing. 
+## Results
+W.I.P
